@@ -1,38 +1,37 @@
-Book Tracker Backend (Spring Boot)
+# Book Tracker Backend
 
-1. Project Overview
-This isn't just a simple CRUD app; it is a secure, fortress-like backend for managing a personal library. I built this to ensure that your reading list stays private using military-grade security (JWT) and a robust database architecture. It handles everything from locking down user passwords to serving up book data at lightning speed.
+## 1. Project Overview
+A secure REST API developed with Spring Boot to manage personal book collections. It ensures data security through JWT-based authentication, allowing users to register, login, and manage their private book lists.
 
-2. Technology Stack
-I used the heavy hitters for this one:
-- Java 17 and Spring Boot 3 for the core logic.
-- Spring Security with JWT for the "bouncer at the door" authentication.
-- Spring Data JPA to talk to the database without writing messy SQL.
-- PostgreSQL to store the data safely.
-- Swagger UI to visualize the API automatically.
+## 2. Technology Stack
+* Java 17, Spring Boot 3
+* PostgreSQL, Spring Data JPA
+* Spring Security, JWT (JSON Web Tokens)
+* Swagger UI
 
-3. Setup Guide
-Getting this running is easier than finishing a novel.
-First, make sure you have a PostgreSQL database created named "book_tracker_db".
-Second, check the application.properties file to ensure your database username and password match yours.
-Third, run the application using your IDE or by running the mvnw clean install command.
-Once it starts, the server will be live on port 8081.
+## 3. Setup Guide
+1. **Database:** Create a PostgreSQL database named `book_tracker_db`.
+2. **Config:** Update `src/main/resources/application.properties` with your database credentials.
+3. **Build:** Run `./mvnw clean install`.
+4. **Run:** Start the application. Server runs on `http://localhost:8081`.
 
-4. Explanation of the Folder Structure
-I kept things organized so the code doesn't look like a mystery novel:
-- controller: These are the traffic cops that handle incoming web requests.
-- model: The blueprints for our data (User and Book).
-- repository: The direct line to the database.
-- security: Where the magic happens—JWT filters and password encryption logic.
-- service: The brain of the operation that handles business logic.
+## 4. Explanation of Folder Structure
+* `controller`: Handles incoming API requests (Auth and Books).
+* `model`: Database entities (User, Book).
+* `repository`: Interfaces for database operations.
+* `security`: JWT filters and password encryption logic.
+* `service`: Business logic layer.
 
-5. API List
-Here are the commands the app understands:
-- POST /register: Signs up a new user.
-- POST /authenticate: Checks credentials and hands out a security token.
-- GET /books: Fetches the user's personal collection.
-- POST /books: Adds a new book to the shelf.
-- DELETE /books/{id}: Removes a book from the collection.
+## 5. API List
+* `POST /register` - Register a new user.
+* `POST /authenticate` - Login and receive JWT.
+* `GET /books` - Retrieve all books for the logged-in user.
+* `POST /books` - Add a new book.
+* `DELETE /books/{id}` - Delete a book by ID.
 
-6. Auth Flow Explanation
-I implemented a stateless security model. When you log in, the server checks your password (which is hashed with BCrypt, so even I can't see it). If it matches, you get a JWT (JSON Web Token). For every request after that, you show this token like a VIP pass, and the server lets you in. No sessions, no cookies, just pure secure tokens.
+## 6. Auth Flow Explanation
+1. User sends credentials to `/authenticate`.
+2. Server validates them and returns a signed **JWT**.
+3. Client stores this token.
+4. Future requests include the token in the `Authorization` header (`Bearer <token>`).
+5. Server validates the token before allowing access to data.
